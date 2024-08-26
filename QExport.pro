@@ -17,12 +17,14 @@ include(./modules/QXlsx/QXlsx.pri)
 
 SOURCES += \
     lib/excel/exceljsontable.cpp \
+    lib/exporter.cpp \
     lib/json/jsontable.cpp \
     lib/pdf/pdfjsontable.cpp \
     main.cpp \
 
 HEADERS += \
     lib/excel/exceljsontable.h \
+    lib/exporter.h \
     lib/json/jsontable.h \
     lib/pdf/pdfjsontable.h \
     lib/templates/tableTemplate.h

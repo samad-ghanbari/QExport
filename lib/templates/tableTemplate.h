@@ -3,13 +3,19 @@
 
 #include <QJsonObject>
 #include <QJsonArray>
-#include "jsontable.h"
+#include "lib/json/jsontable.h"
 #include <QStringList>
 #include <QByteArray>
 
 class TableTemplate
 {
 public:
+    explicit TableTemplate() :
+        table("#000", "#FFF","tahoma",14), title("#000", "#EEE","Tahoma",14){}
+
+    void setColumnCount(int _columnCount){ columnCount = _columnCount;}
+    int getColumnCount(){ return columnCount;}
+
     explicit TableTemplate(int _columnCount ) :
         table("#000", "#FFF","tahoma",14), title("#000", "#EEE","Tahoma",14)
     {
@@ -66,20 +72,20 @@ public:
         return true;
     }
 
-    QJsonArray getTitle(double width, bool justifyWidth = true)
+    QJsonArray getTitle(double width, int spanningNumber = -1, bool justifyWidth = true)
     {
         if(justifyWidth)
-        {
             title.updateFairCell(width, true); // updates width and height
-            title.updateRowSpan(false);
-        }
         else
         {
             title.updateSameWidth(width);
             title.updateHeight();
-            title.updateRowSpan(false);
         }
 
+        if(spanningNumber == -1 )
+            title.updateRowSpan(false);
+        else
+            title.updateRowSpan(spanningNumber);
 
         return title.table;
     }
@@ -156,19 +162,20 @@ public:
         table.highlightRow(row);
     }
 
-    QJsonArray getTable(double width, bool justifyWidth = true)
+    QJsonArray getTable(double width, int spanningNumber = -1, bool justifyWidth = true)
     {
         if(justifyWidth)
-        {
             table.updateFairCell(width, true);
-            table.updateRowSpan(false);
-        }
         else
         {
             table.updateSameWidth(width);
             table.updateHeight();
-            table.updateRowSpan(false);
         }
+
+        if(spanningNumber == -1 )
+            table.updateRowSpan(false);
+        else
+            table.updateRowSpan(spanningNumber);
 
         return table.table;
     }

@@ -370,20 +370,36 @@ double JsonTable::getHeight(int startRow, int endRow)
 
 QJsonObject JsonTable::getObject(int row, int column)
 {
-    QJsonObject obj = table[row].toArray()[column].toObject();
+    QJsonObject obj = {};
+    QJsonArray Row = table[row].toArray();
+    if(Row.isEmpty()) return obj;
+    if(column >= Row.count())
+        return obj;
+
+    obj = table[row].toArray()[column].toObject();
     return obj;
 }
 
 QString JsonTable::getType(int row, int column)
 {
-    QJsonObject obj = table[row].toArray()[column].toObject();
+    QJsonArray Row = table[row].toArray();
+    if(Row.isEmpty()) return NULL;
+    if(column >= Row.count())
+        return NULL;
+
+    QJsonObject obj = Row[column].toObject();
     QString type = obj.value("type").toString();
     return type;
 }
 
 QString JsonTable::getValue(int row, int column)
 {
-    QJsonObject obj = table[row].toArray()[column].toObject();
+    QJsonArray Row = table[row].toArray();
+    if(Row.isEmpty()) return NULL;
+    if(column >= Row.count())
+        return NULL;
+
+    QJsonObject obj = Row[column].toObject();
     QString value = obj.value("value").toString();
     return value;
 }
@@ -397,6 +413,11 @@ QJsonObject JsonTable::getStyle(int row, int column)
 
 int JsonTable::getRowSpan(int row, int column)
 {
+    QJsonArray Row = table[row].toArray();
+    if(Row.isEmpty()) return -1;
+    if(column >= Row.count())
+        return -1;
+
     QJsonObject obj = table[row].toArray()[column].toObject();
     int value = obj["style"].toObject()["row-span"].toInt();
     return value;
