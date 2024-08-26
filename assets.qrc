@@ -1,0 +1,9 @@
+<RCC>
+    <qresource prefix="/images"/>
+    <qresource prefix="/">
+        <file>assets/images/ansible.png</file>
+        <file>assets/images/kuber.png</file>
+        <file>assets/images/tct.png</file>
+        <file>assets/images/danet.png</file>
+    </qresource>
+</RCC>
