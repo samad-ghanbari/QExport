@@ -72,7 +72,7 @@ public:
         return true;
     }
 
-    QJsonArray getTitle(double width, int spanningNumber = -1, bool justifyWidth = true)
+    QJsonArray getTitle(double width, int rowSpanColIndex = -1, bool justifyWidth = true)
     {
         if(justifyWidth)
             title.updateFairCell(width, true); // updates width and height
@@ -82,10 +82,10 @@ public:
             title.updateHeight();
         }
 
-        if(spanningNumber == -1 )
+        if(rowSpanColIndex < 0 )
             title.updateRowSpan(false);
         else
-            title.updateRowSpan(spanningNumber);
+            title.updateRowSpan(rowSpanColIndex);
 
         return title.table;
     }
@@ -147,7 +147,7 @@ public:
         QJsonObject style;
         for(int i = 0; i < types.size(); i++)
         {
-            style = title.createStyle(name, widths[i], heights[i],colors[i], "#FFF", "Tahoma", 14, false, "left", 1 );
+            style = title.createStyle(name, widths[i], heights[i],colors[i], "#FFF", "Tahoma", 14, false, aligns[i], 1 );
 
             QJsonObject obj = table.createObject(types[i], values[i], style);
             row = table.addObjectToRow(row, obj);
@@ -162,7 +162,7 @@ public:
         table.highlightRow(row);
     }
 
-    QJsonArray getTable(double width, int spanningNumber = -1, bool justifyWidth = true)
+    QJsonArray getTable(double width, int rowSpanColIndex = -1, bool justifyWidth = true)
     {
         if(justifyWidth)
             table.updateFairCell(width, true);
@@ -172,10 +172,10 @@ public:
             table.updateHeight();
         }
 
-        if(spanningNumber == -1 )
+        if(rowSpanColIndex < 0 )
             table.updateRowSpan(false);
         else
-            table.updateRowSpan(spanningNumber);
+            table.updateRowSpan(rowSpanColIndex);
 
         return table.table;
     }

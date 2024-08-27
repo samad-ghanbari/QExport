@@ -107,8 +107,7 @@ void PdfJsonTable::preparePage()
                 newRow = false;
             }
 
-            if(!printCell(i, j, obj))
-                break;
+            printCell(i, j, obj);
         }
         painter->resetTransform();
         painter->translate(0, headerHeight);
@@ -139,8 +138,7 @@ void PdfJsonTable::preparePage()
             for(int j=0; j < row.count(); j++)
             {
                 obj = row[j].toObject();
-                if(!printCell(i, j, obj))
-                    break;
+                printCell(i, j, obj);
             }
             currentHeight += rowHeight;
             painter->restore();
@@ -163,17 +161,16 @@ bool PdfJsonTable::print()
     // print content
     for(int i=0; i < tableArray.count(); i++ )
     {
-        painter->save();
         row = tableArray[i].toArray();
         //check empty array
         if(row.count() == 0)
         {
-            painter->restore();
             printer->newPage();
             preparePage();
             continue;
         }
 
+        painter->save();
         rowHeight = getHeight(i);
         if( (currentHeight + rowHeight) > (paperHeight - 30)  )
         {
@@ -200,8 +197,7 @@ bool PdfJsonTable::print()
             }
 
 
-            if(!printCell(i, j, obj))
-                break;
+            printCell(i, j, obj);
         }
         currentHeight += rowHeight;
         painter->restore();
@@ -293,7 +289,7 @@ QJsonObject PdfJsonTable::updateObjectStyle(QJsonObject _object, QString _key, d
     return _object;
 }
 
-bool PdfJsonTable::printCell(int row, int column, QJsonObject obj)
+void PdfJsonTable::printCell(int row, int column, QJsonObject obj)
 {
     // write from left
     QString type = obj.value("type").toString();
@@ -312,7 +308,7 @@ bool PdfJsonTable::printCell(int row, int column, QJsonObject obj)
     QString _color = style.value("color").toString();
     QString _backgroundColor = style.value("background-color").toString();
 
-    if(rowSpan == -1){painter->translate(width, 0); return true;}
+    if(rowSpan == -1){painter->translate(width, 0); return;}
     if(rowSpan > 1)
           height = getRowSpanHeight(row, column);
 
@@ -387,7 +383,7 @@ bool PdfJsonTable::printCell(int row, int column, QJsonObject obj)
         painter->translate(width, 0);
     }
 
-    return true;
+    return;
 
 }
 

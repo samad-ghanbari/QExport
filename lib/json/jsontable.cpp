@@ -19,7 +19,7 @@ JsonTable::JsonTable(QString _default_color, QString _default_background_color, 
     this->default_vPadding = _default_vPadding;
 }
 
-QJsonObject JsonTable::createStyle(QString _name, double _width, double _height, QString _color, QString _backgroundColor, QString _fontFamily, double _fontSize, bool _bold, QString _align, int _border, int _hPadding, int _vPadding, int _rowSpan)
+QJsonObject JsonTable::createStyle(QString _name, double _width, double _height, QString _color, QString _backgroundColor, QString _fontFamily, double _fontSize, bool _bold, QString _align, int _border, int _hPadding, int _vPadding, int _rowSpan, int _colSpan)
 {
     QJsonObject obj;
 
@@ -37,6 +37,7 @@ QJsonObject JsonTable::createStyle(QString _name, double _width, double _height,
     obj["h-padding"] = (_hPadding == 0)? default_hPadding : _hPadding;
     obj["v-padding"] = (_vPadding == 0)? default_vPadding : _vPadding;
     obj["row-span"] = _rowSpan; // 0:default -1:skip n>0:n-span this field will be updated by rowSpanAnalyser
+    obj["col-span"] = _colSpan;
     return obj;
 }
 
@@ -234,21 +235,31 @@ float JsonTable::getRowMaxHeight(QJsonArray Row)
     {
         item = Row.at(i).toObject();
         style = item.value("style").toObject();
-        type = style["type"].toString();
-        height = style.value("height").toDouble();
-        if( (height == 0) && (type.compare("img", Qt::CaseInsensitive) == 0) )
+        type = item["type"].toString();
+        vPadding = style.value("v-padding").toInt();
+        height = style.value("height").toDouble() + 2 * vPadding;
+        // height == 0 > calculate height
+        if(height == 0)
         {
-            QPixmap img(item.value("value").toString());
-            height = img.size().height();
+            if( type.compare("img", Qt::CaseInsensitive) == 0 )
+            {
+                QPixmap img(item.value("value").toString());
+                height = img.size().height();
+            }
+            else if( type.compare("text", Qt::CaseInsensitive) == 0 )
+            {
+                double occupy = style.value("occupy").toDouble();
+                double fontSize = style.value("font-size").toDouble();
+                double width = style.value("width").toDouble();
+                height = calculateWrapHeight(occupy, width, fontSize)  + 2 * vPadding;
+            }
         }
+
         if(maxHeight < height)
-        {
             maxHeight = height;
-            vPadding = style.value("v-padding").toInt();
-        }
     }
 
-    return maxHeight + 2 * vPadding;
+    return maxHeight;
 }
 
 QJsonObject JsonTable::updateStyle(QJsonObject _object, QString _key, QString _val)

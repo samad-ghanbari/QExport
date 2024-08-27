@@ -146,7 +146,7 @@ void ExcelJsonTable::setCellSize(int row, int column, QJsonObject Obj)
     // width :  x 7 pt
     // height : pt
     double width = style["width"].toDouble() * 0.75 / 7;
-    double height = style["height"].toDouble() * 0.75;
+    double height = style["height"].toDouble(); // * 0.75 pixel to point
     if(width < 15)
         width = 15; // in excel file: width: 105 >> 105/7 = 15
     if(height < 30)

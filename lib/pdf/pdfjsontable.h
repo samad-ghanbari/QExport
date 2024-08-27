@@ -66,7 +66,7 @@ public:
     double getHeight(QJsonArray Row);
     QJsonObject updateObjectStyle(QJsonObject _object, QString _key, double _val);
 
-    bool printCell(int row, int column, QJsonObject obj);
+    void printCell(int row, int column, QJsonObject obj);
     void respanRow(int row, int column); // re-rowspan
     void updateTableStyle(int row, int column, QJsonObject style);
 

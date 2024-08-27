@@ -9,12 +9,12 @@ Exporter::Exporter(TableTemplate *tables, QObject *parent)
     width = 0;
 }
 
-void Exporter::pdf(QString outputPath, int spanningColumn, bool justifyWidth, QString Creator, QString DocName, QString pageSize, QString orientation, qreal pageMarginLeft, qreal pageMarginTop, qreal pageMarginRight, qreal pageMarginBottom)
+void Exporter::pdf(QString outputPath, int rowSpanColIndex, bool justifyWidth, QString Creator, QString DocName, QString pageSize, QString orientation, qreal pageMarginLeft, qreal pageMarginTop, qreal pageMarginRight, qreal pageMarginBottom)
 {
     PdfJsonTable pdf(outputPath, Creator,DocName, pageSize, orientation, pageMarginLeft, pageMarginTop, pageMarginRight, pageMarginBottom);
     width = pdf.getViewPortWidth();
 
-    prepareTables(spanningColumn, justifyWidth);
+    prepareTables(rowSpanColIndex, justifyWidth);
 
     pdf.setPageHeader(&title);
     pdf.setTable(&table, {0});
@@ -23,22 +23,21 @@ void Exporter::pdf(QString outputPath, int spanningColumn, bool justifyWidth, QS
 
 void Exporter::excel(QString outputPath, bool justifyWidth, QList<int> repeatedRows, bool skipImages)
 {
-    prepareTables(-1, justifyWidth);
+    prepareTables(0, justifyWidth);
 
     ExcelJsonTable ejs;
     ejs.setTables(title,table);
     ejs.exportExcel(outputPath,repeatedRows,skipImages);
 }
 
-void Exporter::prepareTables(int spanningColumn, bool justifyWidth)
+void Exporter::prepareTables(int rowSpanColIndex, bool justifyWidth)
 {
     if(width == 0)
         width = 1500;
 
     if(title.isEmpty())
-        title = tableTemplate->getTitle(width,spanningColumn, justifyWidth);
+        title = tableTemplate->getTitle(width,rowSpanColIndex, justifyWidth);
 
     if(table.isEmpty())
-        table = tableTemplate->getTable(width,spanningColumn, justifyWidth);
-
+        table = tableTemplate->getTable(width,rowSpanColIndex, justifyWidth);
 }
