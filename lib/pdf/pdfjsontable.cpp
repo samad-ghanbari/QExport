@@ -448,6 +448,7 @@ double PdfJsonTable::getRowSpanHeight(int row, int column)
     QJsonArray array;
     QJsonObject obj;
     array = tableArray[row].toArray();
+    if(array.size() == 0) return 0;
     obj = array[column].toObject();
     obj = obj["style"].toObject();
     int rowSpan = obj["row-span"].toInt();
@@ -459,6 +460,7 @@ double PdfJsonTable::getRowSpanHeight(int row, int column)
         for(int i = row+1; i < tableArray.count(); i++)
         {
             array = tableArray[i].toArray();
+            if(array.size() == 0) continue;
             obj = array[column].toObject();
             obj = obj["style"].toObject();
             rowSpan = obj["row-span"].toInt();

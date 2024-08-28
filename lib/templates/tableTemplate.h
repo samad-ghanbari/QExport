@@ -35,7 +35,7 @@ public:
         QJsonObject style;
         for(int i = 0; i < types.size(); i++)
         {
-           style = title.createStyle(name, 0, 0, colors[i], "#EEE", "Tahoma", 16, true, aligns[i], 1 );
+           style = title.createStyle(name, 0, 0, colors[i], "#EEE", "Tahoma", 16, true, aligns[i], 1);
 
             QJsonObject obj = title.createObject(types[i], values[i], style);
             row = title.addObjectToRow(row, obj);
@@ -62,7 +62,7 @@ public:
         QJsonObject style;
         for(int i = 0; i < types.size(); i++)
         {
-            style = title.createStyle(name, 0, 0, colors[i], "#EEE", "Tahoma", 16, true, aligns[i], 1 );
+            style = title.createStyle(name, 0, 0, colors[i], "#EEE", "Tahoma", 16, true, aligns[i], 1);
 
             QJsonObject obj = title.createObject(types[i], values[i], style);
             row = title.addObjectToRow(row, obj);
@@ -119,7 +119,7 @@ public:
     {
         if(rowList.size() == columnCount)
         {
-            QJsonObject style = title.createStyle(name, 0, 0, "#005", "#FFF", "Tahoma", 14, false, "left", 1 );
+            QJsonObject style = title.createStyle(name, 0, 0, "#005", "#FFF", "Tahoma", 14, true, "left", 1 );
 
             QJsonArray row = table.createObjects("text", rowList, style);
             table.addRowToTable(row);
@@ -147,7 +147,7 @@ public:
         QJsonObject style;
         for(int i = 0; i < types.size(); i++)
         {
-            style = title.createStyle(name, widths[i], heights[i],colors[i], "#FFF", "Tahoma", 14, false, aligns[i], 1 );
+            style = title.createStyle(name, widths[i], heights[i],colors[i], "#FFF", "Tahoma", 14, true, aligns[i], 1 );
 
             QJsonObject obj = table.createObject(types[i], values[i], style);
             row = table.addObjectToRow(row, obj);

@@ -237,7 +237,7 @@ float JsonTable::getRowMaxHeight(QJsonArray Row)
         style = item.value("style").toObject();
         type = item["type"].toString();
         vPadding = style.value("v-padding").toInt();
-        height = style.value("height").toDouble() + 2 * vPadding;
+        height = style.value("height").toDouble();
         // height == 0 > calculate height
         if(height == 0)
         {
@@ -251,7 +251,7 @@ float JsonTable::getRowMaxHeight(QJsonArray Row)
                 double occupy = style.value("occupy").toDouble();
                 double fontSize = style.value("font-size").toDouble();
                 double width = style.value("width").toDouble();
-                height = calculateWrapHeight(occupy, width, fontSize)  + 2 * vPadding;
+                height = calculateWrapHeight(occupy, width, fontSize)  + vPadding;
             }
         }
 
@@ -579,7 +579,7 @@ void JsonTable::updateFairCell(double viewPortWidth, bool wrapAll)
     QJsonArray Row;
     QJsonObject Obj;
     QMap<QString, double> who; // width-height-occupy
-    double width, height, occupy, fontSize;
+    double width, height, occupy, fontSize, vPadding;
     QString type;
     bool textFlag;
 
@@ -596,6 +596,7 @@ void JsonTable::updateFairCell(double viewPortWidth, bool wrapAll)
             textFlag = (type.compare("text", Qt::CaseInsensitive) == 0)? true: false;
             who = getWHO(Obj);
             fontSize = Obj["style"].toObject()["font-size"].toDouble();
+            vPadding = Obj["style"].toObject()["v-padding"].toDouble();
 
              // * given width and hight
             if( (who.value("width") > 0 ) && (who.value("height") > 0) )
@@ -619,9 +620,10 @@ void JsonTable::updateFairCell(double viewPortWidth, bool wrapAll)
 
                 if(width < occupy)
                 {
-                    height = calculateWrapHeight(who.value("occupy"), width, fontSize);
+                    height = calculateWrapHeight(occupy, width, fontSize);
                 }
-                else height = fontSize;
+                else height = fontSize + 2*vPadding;
+
                 if(textFlag)
                 {
                     updateHeight(r,c, height);
@@ -663,7 +665,7 @@ void JsonTable::updateFairCell(double viewPortWidth, bool wrapAll)
 
                 if(width < occupy)
                     height = calculateWrapHeight(who.value("occupy"), width, fontSize);
-                else height = fontSize;
+                else height = fontSize + 2*vPadding;
                 if(textFlag)
                 {
                     updateHeight(r, c, height);
@@ -862,6 +864,7 @@ double JsonTable::calculateWrapHeight(double occupy, double width, double fontSi
     // px = 4/3pt
     int lines = ceil(occupy / width) + 2;
     double height = lines * fontSize * 4/3;
+
     return height;
 }
 
