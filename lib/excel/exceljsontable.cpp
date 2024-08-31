@@ -53,9 +53,10 @@ void ExcelJsonTable::exportExcel(QString _outputPath, QList<int> _repeatedRows, 
             currentColumn = 1;
 
             doc.addSheet(sheetName);
-            doc.selectSheet(sheetIndex);
+            doc.selectSheet(sheetName);
             writeSheetTitleArray();
             writeRepeatedRows();
+            continue;
         }
         writeRow(Row);
     }
@@ -88,7 +89,7 @@ void ExcelJsonTable::writeRepeatedRows()
 {
     foreach (int i, repeatedRows)
     {
-        QJsonArray Row = tableArray[repeatedRows[i]].toArray();
+        QJsonArray Row = tableArray[i].toArray();
         writeRow(Row);
     }
 }
