@@ -22,6 +22,7 @@ void ExcelJsonTable::exportExcel(QString _outputPath, QList<int> _repeatedRows, 
     repeatedRows = _repeatedRows;
 
     QString sheetName = doc.currentSheet()->sheetName();
+    QStringList sheetNames;
     QString newName = getSheetName(1);
     doc.renameSheet( sheetName, newName );
     skipImages = _skipImages;
@@ -48,6 +49,12 @@ void ExcelJsonTable::exportExcel(QString _outputPath, QList<int> _repeatedRows, 
             QString sheetName = "sheet-"+QString::number(sheetIndex);
             if((i+1) < tableArray.size())
                 sheetName = getSheetName(i+1);
+
+            sheetNames = doc.sheetNames();
+            if(sheetNames.contains(sheetName,Qt::CaseInsensitive))
+                sheetName = sheetName+ "-"+QString::number(i);
+            if(sheetNames.contains(sheetName,Qt::CaseInsensitive))
+                sheetName = sheetName+QString::number(i);
 
             currentRow = 1;
             currentColumn = 1;

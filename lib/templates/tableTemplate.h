@@ -72,7 +72,7 @@ public:
         return true;
     }
 
-    QJsonArray getTitle(double width, int rowSpanColIndex = -1, bool justifyWidth = true)
+    QJsonArray getTitle(double width, int rowSpanColIndex = -1, bool justifyWidth = false)
     {
         if(justifyWidth)
             title.updateFairCell(width, true); // updates width and height

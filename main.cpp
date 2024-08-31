@@ -17,17 +17,17 @@ int main(int argc, char *argv[])
     //table
     tableTemplate.setTableHeader({"Menu-1", "Menu-2", "Menu-3", "Menu-4"});
 
-    tableTemplate.appentRow("Interfaces-1", {"Lorem-1 ipsum odor amet, consectetuer adipiscing elit. Blandit eget vulputate cubilia convallis penatibus vivamus ante ante? Odio felis libero auctor elit, parturient donec porta tristique nullam. Scelerisque penatibus maximus erat aptent egestas mus. Eu sed euismod, hac semper arcu tortor ullamcorper vestibulum.", "Lorem-1", "Ipsum-1", "L-I-1"});
-    tableTemplate.appentRow("Interfaces-2", {"Lorem-2", "Data", "CX600X16", "1G 1/2/3"});
+    tableTemplate.appentRow("Interfaces", {"Lorem-1 ipsum odor amet, consectetuer adipiscing elit. Blandit eget vulputate cubilia convallis penatibus vivamus ante ante? Odio felis libero auctor elit, parturient donec porta tristique nullam. Scelerisque penatibus maximus erat aptent egestas mus. Eu sed euismod, hac semper arcu tortor ullamcorper vestibulum.", "Lorem-1", "Ipsum-1", "L-I-1"});
+    tableTemplate.appentRow("Interfaces", {"Lorem-2", "Data", "CX600X16", "1G 1/2/3"});
     tableTemplate.appentRow();
-    tableTemplate.appentRow("Interfaces-3", {"Lorem-2-2", "Data", "CX600X16", "1G 1/2/3"});
+    tableTemplate.appentRow("Interfaces", {"Lorem-2-2", "Data", "CX600X16", "1G 1/2/3"});
 
 
     tableTemplate.appentRow();
 
-    tableTemplate.appentRow("Interfaces-4", {"Lorem-3 ipsum", "PCM", "CX600X16", "Lorem ipsum odor amet, consectetuer adipiscing elit. Non arcu scelerisque nascetur elementum ante iaculis sapien. Facilisi faucibus dolor arcu ante consequat accumsan facilisi."});
+    tableTemplate.appentRow("Interfaces", {"Lorem-3 ipsum", "PCM", "CX600X16", "Lorem ipsum odor amet, consectetuer adipiscing elit. Non arcu scelerisque nascetur elementum ante iaculis sapien. Facilisi faucibus dolor arcu ante consequat accumsan facilisi."});
 
-    tableTemplate.appentRow("Interfaces-5", {"Lorem-5 ", "Data", "CX600X16", "1G 1/1/1"});
+    tableTemplate.appentRow("Interfaces", {"Lorem-5 ", "Data", "CX600X16", "1G 1/1/1"});
 
     tableTemplate.appentRow();
 

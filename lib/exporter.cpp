@@ -36,7 +36,7 @@ void Exporter::prepareTables(int rowSpanColIndex, bool justifyWidth)
         width = 1500;
 
     if(title.isEmpty())
-        title = tableTemplate->getTitle(width,rowSpanColIndex, justifyWidth);
+        title = tableTemplate->getTitle(width,rowSpanColIndex, false);
 
     if(table.isEmpty())
         table = tableTemplate->getTable(width,rowSpanColIndex, justifyWidth);
